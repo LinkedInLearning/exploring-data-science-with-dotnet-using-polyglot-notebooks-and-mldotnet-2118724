@@ -1,7 +1,5 @@
-# COURSENAME
-This is the repository for the LinkedIn Learning course `course-name`. The full course is available from [LinkedIn Learning][lil-course-url].
-
-![course-name-alt-text][lil-thumbnail-url] 
+# Exploring Data Science with .NET using Polyglot Notebooks & ML.NET
+This is the repository for the LinkedIn Learning course Exploring Data Science with .NET using Polyglot Notebooks & ML.NET. The full course is available from [LinkedIn Learning][lil-course-url].
 
 _See the readme file in the main branch for updated instructions and information._
 ## Instructions
