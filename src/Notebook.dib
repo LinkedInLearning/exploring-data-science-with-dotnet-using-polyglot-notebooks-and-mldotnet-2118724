@@ -1,3 +1,11 @@
 #!meta
 
 {"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!csharp
+
+string greeting = "Hello World";
+
+Console.WriteLine(greeting);
+greeting.Display();
+greeting
