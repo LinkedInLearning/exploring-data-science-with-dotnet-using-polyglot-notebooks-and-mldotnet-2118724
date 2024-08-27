@@ -9,3 +9,15 @@ string greeting = "Hello World";
 Console.WriteLine(greeting);
 greeting.Display();
 greeting
+
+#!csharp
+
+Console.WriteLine("My greeting is: " + greeting);
+
+#!csharp
+
+int count = 0;
+
+#!csharp
+
+count++
