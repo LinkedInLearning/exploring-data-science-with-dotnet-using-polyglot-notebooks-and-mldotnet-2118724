@@ -59,3 +59,7 @@ Product myProduct = new() {
   Price = 3.99M
 };
 myProduct
+
+#!markdown
+
+## F# Code
