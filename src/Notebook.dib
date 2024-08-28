@@ -2,6 +2,10 @@
 
 {"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
 
+#!markdown
+
+## Basic C# Cells
+
 #!csharp
 
 string greeting = "Hello World";
@@ -21,3 +25,7 @@ int count = 0;
 #!csharp
 
 count++
+
+#!markdown
+
+## Classes and Methods
