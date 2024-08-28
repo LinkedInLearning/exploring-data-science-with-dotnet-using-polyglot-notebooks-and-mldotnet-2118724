@@ -75,3 +75,7 @@ let mult x y =
   x * y
 
 mult 7 6
+
+#!markdown
+
+## Variable Sharing
