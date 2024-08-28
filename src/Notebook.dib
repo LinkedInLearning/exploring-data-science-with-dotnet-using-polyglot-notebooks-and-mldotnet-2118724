@@ -29,3 +29,33 @@ count++
 #!markdown
 
 ## Classes and Methods
+
+#!csharp
+
+int Multiply(int x, int y) {
+  return x * y;
+}
+
+#!csharp
+
+Multiply(6, 7)
+
+#!csharp
+
+public class Product
+{
+  public string Id {get; set;}
+  public string Name {get; set;}
+  public string Category {get; set;}
+  public decimal Price {get; set;}
+}
+
+#!csharp
+
+Product myProduct = new() {
+  Id = "WAT-1",
+  Name = "Bottled Water",
+  Category = "Drink",
+  Price = 3.99M
+};
+myProduct
