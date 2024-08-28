@@ -63,3 +63,15 @@ myProduct
 #!markdown
 
 ## F# Code
+
+#!fsharp
+
+let language = "F#"
+language
+
+#!fsharp
+
+let mult x y =
+  x * y
+
+mult 7 6
