@@ -79,3 +79,19 @@ mult 7 6
 #!markdown
 
 ## Variable Sharing
+
+#!fsharp
+
+#!set --value @csharp:count --name count
+
+#!csharp
+
+count = 5
+
+#!fsharp
+
+count
+
+#!csharp
+
+count
