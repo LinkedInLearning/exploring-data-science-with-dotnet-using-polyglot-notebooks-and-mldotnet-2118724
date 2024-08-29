@@ -261,3 +261,14 @@ erDiagram
     STATE ||--|{ CITY : "Has"
     CITY ||--o| STATE : "Is capital of"
     CITY ||--o| COUNTRY : "Is capital of"
+
+#!markdown
+
+## Referencing NuGet Packages
+
+#!csharp
+
+using Microsoft.Data.Analysis;
+
+DataFrame df = new DataFrame();
+df
