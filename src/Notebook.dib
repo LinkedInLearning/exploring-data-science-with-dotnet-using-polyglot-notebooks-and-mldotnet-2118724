@@ -102,6 +102,14 @@ count
 
 #!markdown
 
+### Level 3 Header
+
+This is some text with **bold** and *italics*.
+
+Markdown cells support [GitHub Flavored Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github)
+
+#!markdown
+
 ## Mermaid
 
 #!markdown
