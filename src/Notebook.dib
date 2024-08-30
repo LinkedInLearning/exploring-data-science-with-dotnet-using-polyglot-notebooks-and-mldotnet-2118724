@@ -24,3 +24,8 @@ df.Description()
 
 #r "nuget:Plotly.NET,5.0.0"
 #r "nuget:Plotly.NET.Interactive,5.0.0"
+
+#!fsharp
+
+let totals = df["Total"] |> Seq.cast<single>
+totals
