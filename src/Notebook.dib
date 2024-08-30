@@ -11,3 +11,23 @@
 #r "nuget:Microsoft.Data.Analysis,0.21.0"
 
 using Microsoft.Data.Analysis;
+
+#!csharp
+
+DataFrame df = DataFrame.LoadCsv("customers.csv", 
+                                 separator:',', 
+                                 header: true,
+                                 guessRows: 20);
+df
+
+#!csharp
+
+df.Head(5)
+
+#!csharp
+
+df.Tail(3)
+
+#!csharp
+
+df.Sample(3)
