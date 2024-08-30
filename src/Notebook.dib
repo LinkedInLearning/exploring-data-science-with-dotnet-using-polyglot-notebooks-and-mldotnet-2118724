@@ -68,3 +68,13 @@ Chart.Violin(X = salesTier)
 Chart.BoxPlot(X = quantity)
   |> Chart.withSize(2000., 600.)
   |> Chart.withTitle("Distribution of Quantity Sold")
+
+#!markdown
+
+### Multivariate Analysis and Scatter Plots
+
+#!fsharp
+
+Chart.BoxPlot(X = salesTier)
+  |> Chart.withSize(2000., 600.)
+  |> Chart.withTitle("Quantity by Sales Tier")
