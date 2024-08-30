@@ -23,3 +23,7 @@ double median = df["Price"].Median();
 double mean = df["Price"].Mean();
 
 Console.WriteLine($"The mean value is ${mean:f2} and the median is ${median:f2}")
+
+#!csharp
+
+df["Price"] = df["Price"].FillNulls(median)
