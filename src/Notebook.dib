@@ -15,3 +15,12 @@ df.Head(1)
 #!fsharp
 
 df.Description()
+
+#!markdown
+
+## Data Visualizations with Plotly.NET
+
+#!csharp
+
+#r "nuget:Plotly.NET,5.0.0"
+#r "nuget:Plotly.NET.Interactive,5.0.0"
