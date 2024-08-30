@@ -20,7 +20,7 @@ df.Description()
 
 ## Data Visualizations with Plotly.NET
 
-#!csharp
+#!fsharp
 
 #r "nuget:Plotly.NET,5.0.0"
 #r "nuget:Plotly.NET.Interactive,5.0.0"
