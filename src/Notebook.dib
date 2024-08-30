@@ -223,3 +223,7 @@ df.GroupBy("Region").Sum("Total", "Quantity", "Price")
 #!csharp
 
 df.GroupBy("ProdCategory").Mean("Quantity", "Discount", "Total")
+
+#!markdown
+
+## Filtering
