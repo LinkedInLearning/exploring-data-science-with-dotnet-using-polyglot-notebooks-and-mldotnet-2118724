@@ -31,3 +31,12 @@ df["Price"] = df["Price"].FillNulls(median)
 #!csharp
 
 df.Filter(df["Quantity"].ElementwiseIsNull())
+
+#!csharp
+
+df = df.DropNulls();
+df.Filter(df["Quantity"].ElementwiseIsNull())
+
+#!csharp
+
+df.Rows.Count
