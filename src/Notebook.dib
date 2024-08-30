@@ -50,3 +50,21 @@ Chart.Histogram(X = totals, NBinsX = 15)
 let quantity = df["Quantity"] |> Seq.cast<single>
 let salesTier = df["Sales Tier"] |> Seq.cast<single>
 let discount = df["Discount"] |> Seq.cast<single>
+
+#!fsharp
+
+Chart.BoxPlot(X = salesTier)
+  |> Chart.withSize(2000., 600.)
+  |> Chart.withTitle("Distribution of Sales Tier")
+
+#!fsharp
+
+Chart.Violin(X = salesTier)
+  |> Chart.withSize(2000., 600.)
+  |> Chart.withTitle("Distribution of Sales Tier")
+
+#!fsharp
+
+Chart.BoxPlot(X = quantity)
+  |> Chart.withSize(2000., 600.)
+  |> Chart.withTitle("Distribution of Quantity Sold")
