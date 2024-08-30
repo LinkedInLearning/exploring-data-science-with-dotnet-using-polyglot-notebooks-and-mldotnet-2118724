@@ -236,3 +236,7 @@ dfFiltered.Head(5)
 #!markdown
 
 ## Exporting Data
+
+#!csharp
+
+DataFrame.SaveCsv(df, "training.csv", separator: ',', header: true)
