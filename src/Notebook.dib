@@ -2,25 +2,63 @@
 
 {"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
 
-#!markdown
-
-# Working with DataFrames
-
 #!csharp
 
-#r "nuget:Microsoft.Data.Analysis,0.21.0"
-
+#r "nuget:Microsoft.Data.Analysis"
 using Microsoft.Data.Analysis;
 
+#!markdown
+
+## Loading Data
+
 #!csharp
 
-DataFrame df = DataFrame.LoadCsv("customers.csv");
-df.Head(1)
+DataFrame dfCust = DataFrame.LoadCsv("../data/customers.csv", separator: ',', header: true, guessRows: 10);
+dfCust.Sample(5)
 
 #!csharp
 
-df["Sales Region"].SetName("Region");
-df.Columns.Remove("Employee Name");
+dfCust.Info()
+
+#!csharp
+
+dfCust.Description()
+
+#!csharp
+
+dfCust["Sales Region"]
+
+#!csharp
+
+dfCust["Sales Region"].Cast<string>().ToList()
+
+#!csharp
+
+dfCust["Sales Region"].Cast<string>().Distinct()
+
+#!csharp
+
+dfCust["Sales Region"].ValueCounts()
+
+#!csharp
+
+dfCust["CustomerType"].ValueCounts()
+
+#!csharp
+
+dfCust["Employee Job Title"].ValueCounts()
+
+#!markdown
+
+## Rename / Remove
+
+#!csharp
+
+dfCust["Sales Region"].SetName("Region");
+
+#!csharp
+
+dfCust.Columns.Remove("Employee Name");
 
 #!csharp
 
@@ -34,16 +72,60 @@ string[] colsToRemove = {
 
 foreach (string col in colsToRemove)
 {
-    df.Columns.Remove(col);
+    dfCust.Columns.Remove(col);
 }
 
 #!csharp
 
-df["Price"] = df["Price"].FillNulls(df["Price"].Median());
+dfCust.Head(5)
+
+#!markdown
+
+## Replace Missing Values
 
 #!csharp
 
-df = df.DropNulls()
+Console.WriteLine("  Mean: " + dfCust["Price"].Mean());
+Console.WriteLine("Median: " + dfCust["Price"].Median());
+
+#!csharp
+
+dfCust["Price"] = dfCust["Price"].FillNulls(0, inPlace: true)
+
+#!csharp
+
+Console.WriteLine("  Mean: " + dfCust["Price"].Mean());
+Console.WriteLine("Median: " + dfCust["Price"].Median());
+
+#!csharp
+
+dfCust["Quantity"] = dfCust["Quantity"].FillNulls(dfCust["Quantity"].Mean(), inPlace: true);
+
+#!csharp
+
+Console.WriteLine("  Mean: " + dfCust["Quantity"].Mean());
+Console.WriteLine("Median: " + dfCust["Quantity"].Median());
+
+#!csharp
+
+dfCust["Quantity"] = dfCust["Quantity"].FillNulls(dfCust["Quantity"].Mean());
+
+#!csharp
+
+Console.WriteLine("  Mean: " + dfCust["Quantity"].Mean());
+Console.WriteLine("Median: " + dfCust["Quantity"].Median());
+
+#!csharp
+
+dfCust.Rows.Count
+
+#!csharp
+
+dfCust = dfCust.DropNulls();
+
+#!csharp
+
+dfCust.Rows.Count
 
 #!markdown
 
@@ -51,34 +133,21 @@ df = df.DropNulls()
 
 #!csharp
 
-df["CustomerType"].ValueCounts()
+dfCust["IsBusiness"] = dfCust["CustomerType"].ElementwiseEquals("Business");
+dfCust.Head(5)
 
 #!csharp
 
-df["CustomerType"].ElementwiseEquals("Business")
+dfCust.Columns.Remove("CustomerType");
+dfCust.Head(5)
 
 #!csharp
 
-df["IsBusiness"] = df["CustomerType"].ElementwiseEquals("Business")
+dfCust["Employee Job Title"].ValueCounts()
 
 #!csharp
 
-df["IsBusiness"].ValueCounts()
-
-#!csharp
-
-df.Head(1)
-
-#!csharp
-
-df["Employee Job Title"].ValueCounts()
-
-#!csharp
-
-var titles = df["Employee Job Title"].Cast<string>();
-
-#!csharp
-
+var titles = dfCust["Employee Job Title"].Cast<string>();
 titles = titles.Select(title => {
     switch (title) {
       case "Sales Associate":
@@ -91,11 +160,45 @@ titles = titles.Select(title => {
         return title;
     }
   });
+dfCust["Employee Job Title"] = new StringDataFrameColumn("Employee Job Title", titles);
+dfCust["Employee Job Title"].ValueCounts()
 
 #!csharp
 
-df["EmployeeTitle"] = new StringDataFrameColumn("EmployeeTitle", titles)
+Dictionary<string, int> salesTiers = new() {
+    { "Sales Associate I", 1 },
+    { "Sales Associate II", 2 },
+    { "Sales Associate III", 3 },
+    // Senior sales roles start here
+    { "Sales Associate IV", 4 },
+    { "Sales Associate V", 5 },
+};
+salesTiers
 
 #!csharp
 
-df["EmployeeTitle"].ValueCounts()
+List<int> rowSalesTiers = new();
+foreach (string jobTitle in dfCust["Employee Job Title"].Cast<string>())
+{
+    rowSalesTiers.Add(salesTiers[jobTitle]);
+}
+dfCust["Sales Tier"] = new PrimitiveDataFrameColumn<int>("Sales Tier", rowSalesTiers);
+dfCust["Sales Tier"].ValueCounts()
+
+#!csharp
+
+dfCust["Is Senior Sales"] = dfCust["Sales Tier"].ElementwiseGreaterThan(3);
+dfCust["Is Senior Sales"].ValueCounts()
+
+#!markdown
+
+## Merging
+
+#!markdown
+
+dfCust.Sample(5)
+
+#!csharp
+
+DataFrame dfProducts = DataFrame.LoadCsv("../data/products.csv", separator: ',', header: true, guessRows: 10);
+dfProducts.Sample(5)
