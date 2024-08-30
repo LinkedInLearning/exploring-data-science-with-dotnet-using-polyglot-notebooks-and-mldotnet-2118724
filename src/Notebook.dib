@@ -207,3 +207,11 @@ dfProducts.OrderBy("ID").Head(1)
 
 DataFrame df = dfCust.Merge<string>(dfProducts, leftJoinColumn: "ProdID", rightJoinColumn: "ID");
 df.Head(5)
+
+#!markdown
+
+## Grouping
+
+#!csharp
+
+df.Columns.Select(c => c.Name)
