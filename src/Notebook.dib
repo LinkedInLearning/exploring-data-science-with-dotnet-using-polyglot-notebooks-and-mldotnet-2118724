@@ -11,3 +11,7 @@ open Microsoft.Data.Analysis
 
 let df = DataFrame.LoadCsv("training.csv")
 df.Head(1)
+
+#!fsharp
+
+df.Description()
