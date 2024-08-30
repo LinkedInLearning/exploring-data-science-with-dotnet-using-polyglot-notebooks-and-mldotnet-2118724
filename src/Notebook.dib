@@ -227,3 +227,11 @@ df.GroupBy("ProdCategory").Mean("Quantity", "Discount", "Total")
 #!markdown
 
 ## Filtering
+
+#!csharp
+
+df = df.Filter(df["Quantity"].ElementwiseGreaterThanOrEqual(3))
+
+#!csharp
+
+df["Quantity"].ValueCounts()
