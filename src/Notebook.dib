@@ -34,3 +34,9 @@ let totals = df["Total"] |> Seq.cast<single>
 #!markdown
 
 ### Histograms
+
+#!fsharp
+
+Chart.Histogram(X = totals, NBinsX = 15)
+  |> Chart.withSize(2000., 600.)
+  |> Chart.withTitle("Sales Distribution")
