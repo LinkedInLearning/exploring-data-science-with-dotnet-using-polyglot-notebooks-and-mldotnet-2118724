@@ -41,6 +41,10 @@ foreach (string col in colsToRemove)
 
 df["Price"] = df["Price"].FillNulls(df["Price"].Median());
 
+#!csharp
+
+df = df.DropNulls()
+
 #!markdown
 
 ## Feature Engineering
