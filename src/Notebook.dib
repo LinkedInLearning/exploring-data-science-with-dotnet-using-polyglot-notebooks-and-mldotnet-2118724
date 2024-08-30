@@ -4,7 +4,7 @@
 
 #!csharp
 
-#r "nuget:Microsoft.Data.Analysis"
+#r "nuget:Microsoft.Data.Analysis,0.21.1"
 using Microsoft.Data.Analysis;
 
 #!markdown
@@ -13,7 +13,7 @@ using Microsoft.Data.Analysis;
 
 #!csharp
 
-DataFrame dfCust = DataFrame.LoadCsv("../data/customers.csv", separator: ',', header: true, guessRows: 10);
+DataFrame dfCust = DataFrame.LoadCsv("customers.csv", separator: ',', header: true, guessRows: 10);
 dfCust.Sample(5)
 
 #!csharp
@@ -192,13 +192,13 @@ dfCust["Is Senior Sales"].ValueCounts()
 
 #!markdown
 
-## Merging
-
-#!markdown
-
-dfCust.Sample(5)
+## Merging DataFrames
 
 #!csharp
 
-DataFrame dfProducts = DataFrame.LoadCsv("../data/products.csv", separator: ',', header: true, guessRows: 10);
-dfProducts.Sample(5)
+dfCust.OrderBy("ProdID").Head(1)
+
+#!csharp
+
+DataFrame dfProducts = DataFrame.LoadCsv("products.csv");
+dfProducts.OrderBy("ID").Head(1)
