@@ -15,15 +15,40 @@ using Microsoft.Data.Analysis;
 #!csharp
 
 DataFrame df = DataFrame.LoadCsv("customers.csv");
-df.Info()
+df.Head(1)
 
 #!csharp
 
-double median = df["Price"].Median();
-double mean = df["Price"].Mean();
-
-Console.WriteLine($"The mean value is ${mean:f2} and the median is ${median:f2}")
+df["Sales Region"].SetName("Region");
+df.Columns.Remove("Employee Name");
 
 #!csharp
 
-df["Price"] = df["Price"].FillNulls(median)
+string[] colsToRemove = {
+  "OrderDate", 
+  "CustName",
+  "CustID",
+  "OrderNum",
+  "ProdName"
+};
+
+foreach (string col in colsToRemove)
+{
+    df.Columns.Remove(col);
+}
+
+#!csharp
+
+df["Price"] = df["Price"].FillNulls(df["Price"].Median());
+
+#!markdown
+
+## Feature Engineering
+
+#!csharp
+
+df["CustomerType"].ValueCounts()
+
+#!csharp
+
+df["Employee Job Title"].ValueCounts()
