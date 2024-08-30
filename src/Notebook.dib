@@ -30,7 +30,6 @@ open Plotly.NET
 #!fsharp
 
 let totals = df["Total"] |> Seq.cast<single>
-totals
 
 #!markdown
 
