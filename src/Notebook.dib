@@ -40,3 +40,7 @@ let totals = df["Total"] |> Seq.cast<single>
 Chart.Histogram(X = totals, NBinsX = 15)
   |> Chart.withSize(2000., 600.)
   |> Chart.withTitle("Sales Distribution")
+
+#!markdown
+
+### Box and Violin Plots
