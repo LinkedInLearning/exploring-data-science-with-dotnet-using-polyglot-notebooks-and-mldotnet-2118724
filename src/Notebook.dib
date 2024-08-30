@@ -215,3 +215,11 @@ df.Head(5)
 #!csharp
 
 df.Columns.Select(c => c.Name)
+
+#!csharp
+
+df.GroupBy("Region").Sum("Total", "Quantity", "Price")
+
+#!csharp
+
+df.GroupBy("ProdCategory").Mean("Quantity", "Discount", "Total")
