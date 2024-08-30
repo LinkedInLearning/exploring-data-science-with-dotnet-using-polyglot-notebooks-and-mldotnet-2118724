@@ -202,3 +202,8 @@ dfCust.OrderBy("ProdID").Head(1)
 
 DataFrame dfProducts = DataFrame.LoadCsv("products.csv");
 dfProducts.OrderBy("ID").Head(1)
+
+#!csharp
+
+DataFrame df = dfCust.Merge<string>(dfProducts, leftJoinColumn: "ProdID", rightJoinColumn: "ID");
+df.Head(5)
