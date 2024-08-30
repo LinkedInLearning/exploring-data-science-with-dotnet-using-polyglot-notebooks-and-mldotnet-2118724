@@ -19,35 +19,7 @@ df.Info()
 
 #!csharp
 
-df.Columns
+double median = df["Price"].Median();
+double mean = df["Price"].Mean();
 
-#!csharp
-
-df["Sales Region"].SetName("Region")
-
-#!csharp
-
-df.Head(1)
-
-#!csharp
-
-df.Columns.Remove("Employee Name")
-
-#!csharp
-
-string[] colsToRemove = {
-  "OrderDate", 
-  "CustName",
-  "CustID",
-  "OrderNum",
-  "ProdName"
-};
-
-foreach (string col in colsToRemove)
-{
-    df.Columns.Remove(col);
-}
-
-#!csharp
-
-df.Info()
+Console.WriteLine($"The mean value is ${mean:f2} and the median is ${median:f2}")
