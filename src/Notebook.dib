@@ -55,4 +55,47 @@ df["CustomerType"].ValueCounts()
 
 #!csharp
 
+df["CustomerType"].ElementwiseEquals("Business")
+
+#!csharp
+
+df["IsBusiness"] = df["CustomerType"].ElementwiseEquals("Business")
+
+#!csharp
+
+df["IsBusiness"].ValueCounts()
+
+#!csharp
+
+df.Head(1)
+
+#!csharp
+
 df["Employee Job Title"].ValueCounts()
+
+#!csharp
+
+var titles = df["Employee Job Title"].Cast<string>();
+
+#!csharp
+
+titles = titles.Select(title => {
+    switch (title) {
+      case "Sales Associate":
+      case "Sales Representative":
+        return "Sales Associate I";
+      case "Senior Sales Representative":
+      case "Senior Sales Associate":
+        return "Sales Associate V";
+      default:
+        return title;
+    }
+  });
+
+#!csharp
+
+df["EmployeeTitle"] = new StringDataFrameColumn("EmployeeTitle", titles)
+
+#!csharp
+
+df["EmployeeTitle"].ValueCounts()
