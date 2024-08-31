@@ -17,4 +17,4 @@ using Microsoft.ML;
 using Microsoft.ML.AutoML;
 using Microsoft.ML.Data;
 
-DataFrame df = DataFrame.LoadCsv("training.csv");
+IDataView df = DataFrame.LoadCsv("training.csv");
