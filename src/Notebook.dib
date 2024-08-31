@@ -26,3 +26,7 @@ MLContext context = new(seed: 42);
 #!csharp
 
 var split = context.Data.TrainTestSplit(df, testFraction: 0.2);
+
+#!markdown
+
+## Binary Classification
