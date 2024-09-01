@@ -91,3 +91,7 @@ var results = experiment.Execute(split.TrainSet, split.TestSet, labelColumnName:
 #!csharp
 
 results
+
+#!markdown
+
+### Evaluating Regression Metrics
