@@ -62,3 +62,11 @@ results
 #!csharp
 
 RunDetail<BinaryClassificationMetrics> bestRun = results.BestRun;
+
+#!csharp
+
+bestRun.ValidationMetrics
+
+#!csharp
+
+bestRun.ValidationMetrics.ConfusionMatrix.GetFormattedConfusionTable()
