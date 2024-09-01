@@ -17,7 +17,7 @@ using Microsoft.ML;
 using Microsoft.ML.AutoML;
 using Microsoft.ML.Data;
 
-IDataView df = DataFrame.LoadCsv("training.csv");
+var df = DataFrame.LoadCsv("training.csv");
 
 #!csharp
 
@@ -25,7 +25,16 @@ MLContext context = new(seed: 42);
 
 #!csharp
 
-var split = context.Data.TrainTestSplit(df, testFraction: 0.2);
+df.Columns.Remove("Sales Tier");
+df.Columns.Remove("Employee Job Title");
+
+#!csharp
+
+df.Head(1)
+
+#!csharp
+
+var split = context.Data.TrainTestSplit(df, testFraction: 0.3);
 
 #!markdown
 
@@ -34,7 +43,7 @@ var split = context.Data.TrainTestSplit(df, testFraction: 0.2);
 #!csharp
 
 BinaryExperimentSettings settings = new() {
-  MaxExperimentTimeInSeconds = 10,
+  MaxModels = 5,
   OptimizingMetric = BinaryClassificationMetric.F1Score
 };
 
@@ -45,3 +54,11 @@ var experiment = context.Auto().CreateBinaryClassificationExperiment(settings);
 var results = experiment.Execute(split.TrainSet, split.TestSet, labelColumnName: "Is Senior Sales");
 
 results
+
+#!markdown
+
+### Evaluating Classification Models
+
+#!csharp
+
+RunDetail<BinaryClassificationMetrics> bestRun = results.BestRun;
