@@ -30,3 +30,18 @@ var split = context.Data.TrainTestSplit(df, testFraction: 0.2);
 #!markdown
 
 ## Binary Classification
+
+#!csharp
+
+BinaryExperimentSettings settings = new() {
+  MaxExperimentTimeInSeconds = 10,
+  OptimizingMetric = BinaryClassificationMetric.F1Score
+};
+
+var experiment = context.Auto().CreateBinaryClassificationExperiment(settings);
+
+#!csharp
+
+var results = experiment.Execute(split.TrainSet, split.TestSet, labelColumnName: "Is Senior Sales");
+
+results
