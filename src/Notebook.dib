@@ -70,3 +70,14 @@ bestRun.ValidationMetrics
 #!csharp
 
 bestRun.ValidationMetrics.ConfusionMatrix.GetFormattedConfusionTable()
+
+#!markdown
+
+## Training Regression Models
+
+#!csharp
+
+RegressionExperimentSettings settings = new() {
+  MaxModels = 5,
+  OptimizingMetric = RegressionMetric.MeanAbsoluteError
+};
