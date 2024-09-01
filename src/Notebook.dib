@@ -81,3 +81,13 @@ RegressionExperimentSettings settings = new() {
   MaxModels = 5,
   OptimizingMetric = RegressionMetric.MeanAbsoluteError
 };
+
+var experiment = context.Auto().CreateRegressionExperiment(settings);
+
+#!csharp
+
+var results = experiment.Execute(split.TrainSet, split.TestSet, labelColumnName: "Quantity");
+
+#!csharp
+
+results
