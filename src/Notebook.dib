@@ -95,3 +95,7 @@ results
 #!markdown
 
 ### Evaluating Regression Metrics
+
+#!csharp
+
+results.BestRun.ValidationMetrics
