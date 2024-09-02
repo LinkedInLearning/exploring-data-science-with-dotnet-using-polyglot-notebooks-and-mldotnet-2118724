@@ -29,10 +29,14 @@ public class PotentialSale {
   public string Region { get; set; }
   public string CustState { get; set; }
   public string OrderType { get; set; }
+  public string ProdID {get; set;}
   public float Price { get; set; }
+  public float Total { get; set; }
   public float Discount { get; set; }
   public bool IsBusiness {get; set;}
+  [ColumnName("Is Senior Sales")]
   public bool IsSeniorSales { get; set; }
+  [ColumnName("ProdCategory")]
   public string Category { get; set; }
 }
 
