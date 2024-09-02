@@ -36,11 +36,11 @@ public class PotentialSale {
   public bool IsBusiness {get; set;}
   [ColumnName("Is Senior Sales")]
   public bool IsSeniorSales { get; set; }
-  [ColumnName("ProdCategory")]
   public string Category { get; set; }
+  public string ProductName {get; set;}
 }
 
-public class SalesPrediction {
+public class QuantityPrediction {
   [ColumnName("Score")]
   public float Quantity { get; set; }
 }
@@ -50,4 +50,67 @@ public class SalesPrediction {
 ITransformer regressionModel = context.Model.Load("Regression.zip", out _);
 
 var predictionEngine = 
-  context.Model.CreatePredictionEngine<PotentialSale, SalesPrediction>(regressionModel);
+  context.Model.CreatePredictionEngine<PotentialSale, QuantityPrediction>(regressionModel);
+
+#!csharp
+
+var sale = new PotentialSale {
+  Region = "N Central East",
+  CustState = "Ohio",
+  OrderType = "Retail",
+  IsBusiness = false,
+  Price = 20.99f,
+  Discount = 0.1f,
+  IsSeniorSales = false,
+  Category = "Supplements"
+};
+
+predictionEngine.Predict(sale)
+
+#!markdown
+
+### Classification Prediction
+
+#!csharp
+
+public class ObservedSale {
+  public string Region { get; set; }
+  public string CustState { get; set; }
+  public string OrderType { get; set; }
+  public string ProdID {get; set;}
+  public float Price { get; set; }
+  public float Total { get; set; }
+  public float Discount { get; set; }
+  public bool IsBusiness {get; set;}
+  public float Quantity {get; set;}
+  public string Category { get; set; }
+  public string ProductName {get; set;}
+}
+
+public class SalesTeamPrediction {
+  [ColumnName("Label")]
+  public bool IsSeniorSales { get; set; }
+  public float Probability { get; set; }
+  public float Score { get; set; }
+}
+
+#!csharp
+
+ITransformer classificationModel = context.Model.Load("Classifier.zip", out _);
+
+var predictionEngine = 
+  context.Model.CreatePredictionEngine<ObservedSale, SalesTeamPrediction>(classificationModel);
+
+#!csharp
+
+var sale = new ObservedSale {
+  Region = "N Central East",
+  CustState = "Ohio",
+  OrderType = "Retail",
+  Price = 10.99f,
+  Discount = 0.0f,
+  Quantity = 1,
+  Category = "Supplements"
+};
+
+predictionEngine.Predict(sale)
