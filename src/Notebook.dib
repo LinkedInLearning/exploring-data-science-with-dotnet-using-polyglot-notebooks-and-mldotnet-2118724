@@ -30,6 +30,7 @@ df.Columns.Remove("Employee Job Title");
 df.Columns.Remove("EmpID");
 df.Columns.Remove("ID");
 df.Columns.Remove("ListPrice");
+df.Columns.Remove("ProdCategory")
 
 #!csharp
 
