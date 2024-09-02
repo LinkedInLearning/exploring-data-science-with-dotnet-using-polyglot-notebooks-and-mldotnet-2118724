@@ -8,117 +8,42 @@
 
 #!csharp
 
-#r "nuget:Microsoft.Data.Analysis,0.21.1"
 #r "nuget:Microsoft.ML,3.0.1"
 #r "nuget:Microsoft.ML.AutoML,0.21.1"
 
-using Microsoft.Data.Analysis;
 using Microsoft.ML;
 using Microsoft.ML.AutoML;
 using Microsoft.ML.Data;
-
-var df = DataFrame.LoadCsv("training.csv");
 
 #!csharp
 
 MLContext context = new(seed: 42);
 
-#!csharp
-
-df.Columns.Remove("Sales Tier");
-df.Columns.Remove("Employee Job Title");
-
-#!csharp
-
-df.Head(1)
-
-#!csharp
-
-var split = context.Data.TrainTestSplit(df, testFraction: 0.3);
-
 #!markdown
 
-## Binary Classification
+## Regression Prediction
 
 #!csharp
 
-BinaryExperimentSettings settings = new() {
-  MaxModels = 5,
-  OptimizingMetric = BinaryClassificationMetric.F1Score
-};
+public class PotentialSale {
+  public string Region { get; set; }
+  public string CustState { get; set; }
+  public string OrderType { get; set; }
+  public float Price { get; set; }
+  public float Discount { get; set; }
+  public bool IsBusiness {get; set;}
+  public bool IsSeniorSales { get; set; }
+  public string Category { get; set; }
+}
 
-var experiment = context.Auto().CreateBinaryClassificationExperiment(settings);
-
-#!csharp
-
-var classifyResults = experiment.Execute(split.TrainSet, split.TestSet, labelColumnName: "Is Senior Sales");
-
-classifyResults
-
-#!markdown
-
-### Evaluating Classification Models
-
-#!csharp
-
-RunDetail<BinaryClassificationMetrics> bestRun = classifyResults.BestRun;
+public class SalesPrediction {
+  [ColumnName("Score")]
+  public float Quantity { get; set; }
+}
 
 #!csharp
 
-bestRun.ValidationMetrics
+ITransformer regressionModel = context.Model.Load("Regression.zip", out _);
 
-#!csharp
-
-bestRun.ValidationMetrics.ConfusionMatrix.GetFormattedConfusionTable()
-
-#!markdown
-
-## Training Regression Models
-
-#!csharp
-
-RegressionExperimentSettings settings = new() {
-  MaxModels = 5,
-  OptimizingMetric = RegressionMetric.MeanAbsoluteError
-};
-
-var experiment = context.Auto().CreateRegressionExperiment(settings);
-
-#!csharp
-
-var regressionResults = experiment.Execute(split.TrainSet, split.TestSet, labelColumnName: "Quantity");
-
-#!csharp
-
-regressionResults
-
-#!markdown
-
-### Evaluating Regression Metrics
-
-#!csharp
-
-regressionResults.BestRun.ValidationMetrics
-
-#!markdown
-
-## Saving and Loading Models
-
-#!csharp
-
-ITransformer classificationModel = classifyResults.BestRun.Model;
-ITransformer regressionModel = regressionResults.BestRun.Model;
-
-DataViewSchema schema = split.TrainSet.Schema;
-
-#!csharp
-
-context.Model.Save(classificationModel, schema, "Classifier.zip");
-
-#!csharp
-
-context.Model.Save(regressionModel, schema, "Regression.zip");
-
-#!csharp
-
-ITransformer loadedModel = context.Model.Load("Regression.zip", out _);
+var predictionEngine = 
+  context.Model.CreatePredictionEngine<PotentialSale, SalesPrediction>(regressionModel);
