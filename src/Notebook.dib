@@ -110,3 +110,15 @@ ITransformer classificationModel = classifyResults.BestRun.Model;
 ITransformer regressionModel = regressionResults.BestRun.Model;
 
 DataViewSchema schema = split.TrainSet.Schema;
+
+#!csharp
+
+context.Model.Save(classificationModel, schema, "Classifier.zip");
+
+#!csharp
+
+context.Model.Save(regressionModel, schema, "Regression.zip");
+
+#!csharp
+
+ITransformer loadedModel = context.Model.Load("Regression.zip", out _);
