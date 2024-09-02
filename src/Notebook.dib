@@ -51,9 +51,9 @@ var experiment = context.Auto().CreateBinaryClassificationExperiment(settings);
 
 #!csharp
 
-var results = experiment.Execute(split.TrainSet, split.TestSet, labelColumnName: "Is Senior Sales");
+var classifyResults = experiment.Execute(split.TrainSet, split.TestSet, labelColumnName: "Is Senior Sales");
 
-results
+classifyResults
 
 #!markdown
 
@@ -61,7 +61,7 @@ results
 
 #!csharp
 
-RunDetail<BinaryClassificationMetrics> bestRun = results.BestRun;
+RunDetail<BinaryClassificationMetrics> bestRun = classifyResults.BestRun;
 
 #!csharp
 
@@ -86,11 +86,11 @@ var experiment = context.Auto().CreateRegressionExperiment(settings);
 
 #!csharp
 
-var results = experiment.Execute(split.TrainSet, split.TestSet, labelColumnName: "Quantity");
+var regressionResults = experiment.Execute(split.TrainSet, split.TestSet, labelColumnName: "Quantity");
 
 #!csharp
 
-results
+regressionResults
 
 #!markdown
 
@@ -98,4 +98,15 @@ results
 
 #!csharp
 
-results.BestRun.ValidationMetrics
+regressionResults.BestRun.ValidationMetrics
+
+#!markdown
+
+## Saving and Loading Models
+
+#!csharp
+
+ITransformer classificationModel = classifyResults.BestRun.Model;
+ITransformer regressionModel = regressionResults.BestRun.Model;
+
+DataViewSchema schema = split.TrainSet.Schema;
