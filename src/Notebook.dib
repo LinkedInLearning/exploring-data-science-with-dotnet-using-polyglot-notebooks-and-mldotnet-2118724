@@ -27,6 +27,9 @@ MLContext context = new(seed: 42);
 
 df.Columns.Remove("Sales Tier");
 df.Columns.Remove("Employee Job Title");
+df.Columns.Remove("EmpID");
+df.Columns.Remove("ID");
+df.Columns.Remove("ListPrice");
 
 #!csharp
 
