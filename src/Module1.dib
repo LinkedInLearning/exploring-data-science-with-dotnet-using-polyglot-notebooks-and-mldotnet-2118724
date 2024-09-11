@@ -1,0 +1,278 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+## Basic C# Cells
+
+#!csharp
+
+string greeting = "Hello World";
+
+Console.WriteLine(greeting);
+greeting.Display();
+greeting
+
+#!csharp
+
+Console.WriteLine("My greeting is: " + greeting);
+
+#!csharp
+
+int count = 0;
+
+#!csharp
+
+count++
+
+#!markdown
+
+## Classes and Methods
+
+#!csharp
+
+int Multiply(int x, int y) {
+  return x * y;
+}
+
+#!csharp
+
+Multiply(6, 7)
+
+#!csharp
+
+public class Product
+{
+  public string Id {get; set;}
+  public string Name {get; set;}
+  public string Category {get; set;}
+  public decimal Price {get; set;}
+}
+
+#!csharp
+
+Product myProduct = new() {
+  Id = "WAT-1",
+  Name = "Bottled Water",
+  Category = "Drink",
+  Price = 3.99M
+};
+myProduct
+
+#!markdown
+
+## F# Code
+
+#!fsharp
+
+let language = "F#"
+language
+
+#!fsharp
+
+let mult x y =
+  x * y
+
+mult 7 6
+
+#!markdown
+
+## Variable Sharing
+
+#!fsharp
+
+#!set --value @csharp:count --name count
+
+#!csharp
+
+count = 5
+
+#!fsharp
+
+count
+
+#!csharp
+
+count
+
+#!markdown
+
+## Markdown Cells
+
+#!markdown
+
+### Level 3 Header
+
+This is some text with **bold** and *italics*.
+
+Markdown cells support [GitHub Flavored Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github)
+
+#!markdown
+
+## Mermaid
+
+#!markdown
+
+### Flowcharts
+
+#!mermaid
+
+flowchart
+    Client --> Server
+    Server --> Database
+
+#!mermaid
+
+flowchart LR
+    Client --> Server
+    Server --> Database
+    Database -.-> Server
+    Server -.-> Client
+
+#!mermaid
+
+flowchart LR
+    c[Client]
+    s[Server]
+    db[(Database)]
+    
+    c -- HTTP GET --> s
+    s -- SQL Query --> db
+    db -. Result Set .-> s
+    s -. JSON .-> c
+
+#!mermaid
+
+flowchart LR
+    subgraph Azure
+        s[Server]
+        db[(Database)]
+    end
+    subgraph Netlify
+        c[Client]
+    end
+
+    c -- HTTP GET --> s
+    s -. JSON .-> c    
+    db -. Result Set .-> s
+    s -- SQL Query --> db
+
+#!markdown
+
+### Git Graphs
+
+#!mermaid
+
+%%{init: { 'theme': 'base' } }%%
+gitGraph
+    commit
+    commit
+    branch feature
+    commit id: "Dark Theme"
+    checkout main
+    merge feature
+    commit
+
+#!mermaid
+
+%%{init: { 'theme': 'base' } }%%
+gitGraph
+    commit tag: "v0.4.0"
+    branch feature
+    checkout main
+    commit
+    branch bugfix
+    commit id: "Whoopsies" type: REVERSE
+    checkout feature
+    commit id: "Dark Theme"
+    checkout main
+    merge feature
+    commit tag: "v0.4.1"
+    commit type: HIGHLIGHT
+    checkout bugfix
+    commit id: "Fixed Null Ref"
+    checkout main
+    merge bugfix tag: "v0.4.2"
+
+#!markdown
+
+### Class Diagrams
+
+#!mermaid
+
+classDiagram
+    Human *-- Cells : composed of
+    Salesperson o-- Sales : makes
+    Human <|-- Salesperson : is
+
+#!mermaid
+
+classDiagram
+    class GameObject {
+        <<abstract>>
+        -String Name
+        -int PosX
+        -int PosY
+        +Despawn() void
+    }
+    class RaceCar {
+        +decimal MaxGallonsOfGas
+        -decimal CurrentGallonsOfGas
+        -decimal MilesPerGallon
+        +Drive(decimal miles) void
+    }
+    GameObject <|-- RaceCar
+
+#!markdown
+
+### Entity Relationship Diagrams
+
+#!mermaid
+
+erDiagram
+    COUNTRY
+    STATE
+    CITY
+    COUNTRY ||--|{ STATE : "Has"
+    STATE ||--|{ CITY : "Has"
+    CITY ||--o| STATE : "Is capital of"
+    CITY ||--o| COUNTRY : "Is capital of"
+
+#!mermaid
+
+erDiagram
+    CITY {
+        int city_id PK
+        string name
+        string state_abbreviation FK
+    }
+    STATE {
+        string state_abbreviation PK
+        string name
+        int capital_city_id FK
+        int country_id FK
+    }
+    COUNTRY {
+        int country_id PK
+        string name
+    }
+    COUNTRY ||--|{ STATE : "Has"
+    STATE ||--|{ CITY : "Has"
+    CITY ||--o| STATE : "Is capital of"
+    CITY ||--o| COUNTRY : "Is capital of"
+
+#!markdown
+
+## Referencing NuGet Packages
+
+#!csharp
+
+#r "nuget:Microsoft.Data.Analysis,0.21.0"
+
+#!csharp
+
+using Microsoft.Data.Analysis;
+
+DataFrame df = new DataFrame();
+df

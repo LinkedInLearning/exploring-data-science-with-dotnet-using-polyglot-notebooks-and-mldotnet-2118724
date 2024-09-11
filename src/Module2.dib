@@ -1,0 +1,242 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!csharp
+
+#r "nuget:Microsoft.Data.Analysis,0.21.1"
+using Microsoft.Data.Analysis;
+
+#!markdown
+
+## Loading Data
+
+#!csharp
+
+DataFrame dfCust = DataFrame.LoadCsv("customers.csv", separator: ',', header: true, guessRows: 10);
+dfCust.Sample(5)
+
+#!csharp
+
+dfCust.Info()
+
+#!csharp
+
+dfCust.Description()
+
+#!csharp
+
+dfCust["Sales Region"]
+
+#!csharp
+
+dfCust["Sales Region"].Cast<string>().ToList()
+
+#!csharp
+
+dfCust["Sales Region"].Cast<string>().Distinct()
+
+#!csharp
+
+dfCust["Sales Region"].ValueCounts()
+
+#!csharp
+
+dfCust["CustomerType"].ValueCounts()
+
+#!csharp
+
+dfCust["Employee Job Title"].ValueCounts()
+
+#!markdown
+
+## Rename / Remove
+
+#!csharp
+
+dfCust["Sales Region"].SetName("Region");
+
+#!csharp
+
+dfCust.Columns.Remove("Employee Name");
+
+#!csharp
+
+string[] colsToRemove = {
+  "OrderDate", 
+  "CustName",
+  "CustID",
+  "OrderNum",
+  "ProdName"
+};
+
+foreach (string col in colsToRemove)
+{
+    dfCust.Columns.Remove(col);
+}
+
+#!csharp
+
+dfCust.Head(5)
+
+#!markdown
+
+## Replace Missing Values
+
+#!csharp
+
+Console.WriteLine("  Mean: " + dfCust["Price"].Mean());
+Console.WriteLine("Median: " + dfCust["Price"].Median());
+
+#!csharp
+
+dfCust["Price"] = dfCust["Price"].FillNulls(0, inPlace: true)
+
+#!csharp
+
+Console.WriteLine("  Mean: " + dfCust["Price"].Mean());
+Console.WriteLine("Median: " + dfCust["Price"].Median());
+
+#!csharp
+
+dfCust["Quantity"] = dfCust["Quantity"].FillNulls(dfCust["Quantity"].Mean(), inPlace: true);
+
+#!csharp
+
+Console.WriteLine("  Mean: " + dfCust["Quantity"].Mean());
+Console.WriteLine("Median: " + dfCust["Quantity"].Median());
+
+#!csharp
+
+dfCust["Quantity"] = dfCust["Quantity"].FillNulls(dfCust["Quantity"].Mean());
+
+#!csharp
+
+Console.WriteLine("  Mean: " + dfCust["Quantity"].Mean());
+Console.WriteLine("Median: " + dfCust["Quantity"].Median());
+
+#!csharp
+
+dfCust.Rows.Count
+
+#!csharp
+
+dfCust = dfCust.DropNulls();
+
+#!csharp
+
+dfCust.Rows.Count
+
+#!markdown
+
+## Feature Engineering
+
+#!csharp
+
+dfCust["IsBusiness"] = dfCust["CustomerType"].ElementwiseEquals("Business");
+dfCust.Head(5)
+
+#!csharp
+
+dfCust.Columns.Remove("CustomerType");
+dfCust.Head(5)
+
+#!csharp
+
+dfCust["Employee Job Title"].ValueCounts()
+
+#!csharp
+
+var titles = dfCust["Employee Job Title"].Cast<string>();
+titles = titles.Select(title => {
+    switch (title) {
+      case "Sales Associate":
+      case "Sales Representative":
+        return "Sales Associate I";
+      case "Senior Sales Representative":
+      case "Senior Sales Associate":
+        return "Sales Associate V";
+      default:
+        return title;
+    }
+  });
+dfCust["Employee Job Title"] = new StringDataFrameColumn("Employee Job Title", titles);
+dfCust["Employee Job Title"].ValueCounts()
+
+#!csharp
+
+Dictionary<string, int> salesTiers = new() {
+    { "Sales Associate I", 1 },
+    { "Sales Associate II", 2 },
+    { "Sales Associate III", 3 },
+    // Senior sales roles start here
+    { "Sales Associate IV", 4 },
+    { "Sales Associate V", 5 },
+};
+salesTiers
+
+#!csharp
+
+List<int> rowSalesTiers = new();
+foreach (string jobTitle in dfCust["Employee Job Title"].Cast<string>())
+{
+    rowSalesTiers.Add(salesTiers[jobTitle]);
+}
+dfCust["Sales Tier"] = new PrimitiveDataFrameColumn<int>("Sales Tier", rowSalesTiers);
+dfCust["Sales Tier"].ValueCounts()
+
+#!csharp
+
+dfCust["Is Senior Sales"] = dfCust["Sales Tier"].ElementwiseGreaterThan(3);
+dfCust["Is Senior Sales"].ValueCounts()
+
+#!markdown
+
+## Merging DataFrames
+
+#!csharp
+
+dfCust.OrderBy("ProdID").Head(1)
+
+#!csharp
+
+DataFrame dfProducts = DataFrame.LoadCsv("products.csv");
+dfProducts.OrderBy("ID").Head(1)
+
+#!csharp
+
+DataFrame df = dfCust.Merge<string>(dfProducts, leftJoinColumn: "ProdID", rightJoinColumn: "ID");
+df.Head(5)
+
+#!markdown
+
+## Grouping
+
+#!csharp
+
+df.Columns.Select(c => c.Name)
+
+#!csharp
+
+df.GroupBy("Region").Sum("Total", "Quantity", "Price")
+
+#!csharp
+
+df.GroupBy("ProdCategory").Mean("Quantity", "Discount", "Total")
+
+#!markdown
+
+## Filtering
+
+#!csharp
+
+DataFrame dfFiltered = df.Filter(df["Quantity"].ElementwiseGreaterThanOrEqual(3));
+dfFiltered.Head(5)
+
+#!markdown
+
+## Exporting Data
+
+#!csharp
+
+DataFrame.SaveCsv(df, "training.csv", separator: ',', header: true)

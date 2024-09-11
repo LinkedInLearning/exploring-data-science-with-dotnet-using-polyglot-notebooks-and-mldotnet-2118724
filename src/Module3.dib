@@ -1,0 +1,98 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!fsharp
+
+#r "nuget:Microsoft.Data.Analysis,0.21.1"
+open Microsoft.Data.Analysis
+
+#!fsharp
+
+let df = DataFrame.LoadCsv("training.csv")
+df.Head(1)
+
+#!fsharp
+
+df.Description()
+
+#!markdown
+
+## Data Visualizations with Plotly.NET
+
+#!fsharp
+
+#r "nuget:Plotly.NET,5.0.0"
+#r "nuget:Plotly.NET.Interactive,5.0.0"
+
+open Plotly.NET
+
+#!fsharp
+
+let totals = df["Total"] |> Seq.cast<single>
+
+#!markdown
+
+### Histograms
+
+#!fsharp
+
+Chart.Histogram(X = totals, NBinsX = 15)
+  |> Chart.withSize(2000., 600.)
+  |> Chart.withTitle("Sales Distribution")
+
+#!markdown
+
+### Box and Violin Plots
+
+#!fsharp
+
+let quantity = df["Quantity"] |> Seq.cast<single>
+let salesTier = df["Sales Tier"] |> Seq.cast<single>
+let discount = df["Discount"] |> Seq.cast<single>
+
+#!fsharp
+
+Chart.BoxPlot(X = salesTier)
+  |> Chart.withSize(2000., 600.)
+  |> Chart.withTitle("Distribution of Sales Tier")
+
+#!fsharp
+
+Chart.Violin(X = salesTier)
+  |> Chart.withSize(2000., 600.)
+  |> Chart.withTitle("Distribution of Sales Tier")
+
+#!fsharp
+
+Chart.BoxPlot(X = quantity)
+  |> Chart.withSize(2000., 600.)
+  |> Chart.withTitle("Distribution of Quantity Sold")
+
+#!markdown
+
+### Multivariate Analysis and Scatter Plots
+
+#!fsharp
+
+Chart.BoxPlot(X = salesTier, Y = quantity)
+  |> Chart.withSize(2000., 600.)
+  |> Chart.withTitle("Quantity by Sales Tier")
+
+#!fsharp
+
+Chart.Point(x = salesTier, y = quantity)
+  |> Chart.withSize(2000., 600.)
+  |> Chart.withTitle("Quantity by Sales Tier")
+
+#!fsharp
+
+Chart.Point(x = total, y = quantity)
+  |> Chart.withSize(2000., 600.)
+  |> Chart.withTitle("Quantity and Total Sales")
+
+#!fsharp
+
+Chart.Point3D(x = total, y = quantity, z = salesTier)
+  |> Chart.withSize(2000., 800.)
+  |> Chart.withTitle("Quantity, Total, and Sales Tier")
