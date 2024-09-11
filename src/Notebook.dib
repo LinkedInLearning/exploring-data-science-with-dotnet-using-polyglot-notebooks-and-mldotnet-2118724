@@ -87,12 +87,12 @@ Chart.Point(x = salesTier, y = quantity)
 
 #!fsharp
 
-Chart.Point(x = total, y = quantity)
+Chart.Point(x = totals, y = quantity)
   |> Chart.withSize(2000., 600.)
   |> Chart.withTitle("Quantity and Total Sales")
 
 #!fsharp
 
-Chart.Point3D(x = total, y = quantity, z = salesTier)
+Chart.Point3D(x = totals, y = quantity, z = salesTier)
   |> Chart.withSize(2000., 800.)
   |> Chart.withTitle("Quantity, Total, and Sales Tier")
