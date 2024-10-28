@@ -1,6 +1,12 @@
 # Exploring Data Science with .NET using Polyglot Notebooks & ML.NET
 This is the repository for the LinkedIn Learning course Exploring Data Science with .NET using Polyglot Notebooks & ML.NET. The full course is available from [LinkedIn Learning][lil-course-url].
 
+![lil-thumbnail-url]
+
+## Course Description
+
+In this course, Matt Eland—an AI specialist, Microsoft MVP, and author—equips experienced .NET developers with the skills to conduct data analytics and data science experiments using Polyglot Notebooks. Dive into the core of Polyglot Notebooks, its relationship to Jupyter Notebooks, and language support for C#, F#, PowerShell, SQL, and Mermaid diagrams. Learn data ingestion, sharing between kernels, exploratory data analysis with descriptive statistics, and data visualization using libraries like Microsoft.Data.Analysis, ScottPlot, and Plotly.NET. Explore basic machine learning concepts, model training, train/test splits, evaluation, and beginner classification/regression experiments with ML.NET's AutoML capabilities. Plus, cover advanced Polyglot Notebooks integrations like Azure OpenAI, Semantic Kernel, Sequence Diagram Generation, and Azure AI Services.
+
 _See the readme file in the main branch for updated instructions and information._
 ## Instructions
 This repository has branches for each of the videos in the course. You can use the branch pop up menu in github to switch to a specific branch and take a look at the course at that stage, or you can add `/tree/BRANCH_NAME` to the URL to go to the branch you want to access.
@@ -20,15 +26,18 @@ To resolve this issue:
     Add changes to git using this command: git add .
 	Commit changes using this command: git commit -m "some message"
 
-## Installing
-1. To use these exercise files, you must have the following installed:
-	- [list of requirements for course]
-2. Clone this repository into your local machine using the terminal (Mac), CMD (Windows), or a GUI tool like SourceTree.
-3. [Course-specific instructions]
+ ## Instructor
+
+Matt Eland
+
+AI Specialist, Microsoft MVP in AI
+                 
+
+Check out my other courses on [LinkedIn Learning](https://www.linkedin.com/learning/instructors/matt-eland?u=104).
 
 
 [0]: # (Replace these placeholder URLs with actual course URLs)
 
-[lil-course-url]: https://www.linkedin.com/learning/
-[lil-thumbnail-url]: http://
+[lil-course-url]: https://www.linkedin.com/learning/exploring-data-science-with-dot-net-using-polyglot-notebooks-ml-dot-net/
+[lil-thumbnail-url]: https://media.licdn.com/dms/image/v2/D4D0DAQHTwhnssdSJ4g/learning-public-crop_675_1200/learning-public-crop_675_1200/0/1728682567255?e=2147483647&v=beta&t=JaEkKRNhSaHYlZ18gX7HuOGDx65OI1rRXCj1IKQDidY
 
